@@ -1,66 +1,70 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## Сервис управления документами
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Document Service - это простой RESTful API, построенный с использованием Laravel, предоставляющий функционал для управления документами. Он включает в себя базовые операции CRUD для документов, хранящихся в базе данных MySQL. Внедрена аутентификация по токену Bearer для обеспечения безопасного доступа к API.
 
-## About Laravel
+## Установка
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Клонируйте репозиторий:
+  git clone https://github.com/alexandramangasaryan/document-service.git
+- Установите зависимости:
+  composer install
+- Настройте переменные окружения, скопировав файл .env.example в .env:
+- Обновите настройки подключения к базе данных в файле .env в соответствии с вашей конфигурацией MySQL.
+- Сгенерируйте ключ приложения:
+    php artisan key:generate
+- Выполните миграции базы данных и заполните ее тестовыми данными:
+  php artisan migrate --seed 
+- Запустите сервер разработки:
+  php artisan serve
+  
+Приложение будет доступно по адресу http://localhost:8000
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## API-точки
+1. Получить список документов
+   - URL: /api/documents
+   - Метод: GET
+   - Описание: Получает пагинированный список документов.
+   - Аутентификация: Токен Bearer
+   - Для пагинации: /api/documents?page=2
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+2. Получить документ по ID
+   - URL: /api/document/{id}
+   - Метод: GET
+   - Описание: Получает конкретный документ по его ID.
+   - Аутентификация: Токен Bearer
 
-## Learning Laravel
+##Тестирование с Postman
+Для тестирования API Document Service с использованием Postman, вы можете следовать следующим шагам:
+1. Получение токена Bearer:
+- Откройте Postman.
+- Создайте новый запрос типа POST.
+- Укажите URL вашего локального сервера для получения токена, например: http://localhost:8000/api/register.
+- В разделе Body выберите x-www-form-urlencoded и добавьте параметры name, email и password для аутентификации.
+Отправьте запрос.
+2. Использование токена в последующих запросах:
+  - Скопируйте полученный токен.
+  - Отредактируйте созданный ранее запрос в Postman.
+  - Перейдите на вкладку Authorization.
+  - Выберите тип Bearer Token и вставьте скопированный токен.
+3. Тестирование эндпоинтов:
+   - Создайте новые запросы для тестирования эндпоинтов API.
+   - Укажите URL, метод (GET, POST и т. д.) и необходимые параметры.
+   - При необходимости добавьте токен в раздел Authorization.
+   - Отправьте запрос и проверьте ответ.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Примеры тестовых запросов:
+1. GET /api/documents:
+    - URL: http://localhost:8000/api/documents
+    - Метод: GET
+    - Авторизация: Bearer Token
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+2. GET /api/document/{id}:
+- URL: http://localhost:8000/api/document/{id}
+- Метод: GET
+- Авторизация: Bearer Token
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Обязательно убедитесь, что ваш сервер работает, и все маршруты настроены правильно перед выполнением тестов в Postman.
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
 
-### Premium Partners
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
